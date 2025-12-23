@@ -3,166 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad Design Searcher | Roblox Directory</title>
+    <title>Bad Design Searcher | Next-Gen Directory</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #030408;
-            --card: #0b0d13;
+            --bg: #020205;
+            --card: #0d0e14;
             --accent: #3e81ff;
             --text: #ffffff;
             --text-muted: #8a919e;
-            --border: rgba(255, 255, 255, 0.05);
-            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
-        * { box-sizing: border-box; transition: all 0.2s ease; }
+        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         body { 
             background-color: var(--bg); 
             color: var(--text); 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            margin: 0; padding-bottom: 100px;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
+            margin: 0; padding-bottom: 50px;
+            background-image: radial-gradient(circle at 50% -10%, #1e293b 0%, transparent 60%);
         }
 
         .navbar {
-            padding: 20px;
-            text-align: center;
+            padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             position: sticky; top: 0; z-index: 100;
-            background: rgba(3, 4, 8, 0.8);
+            background: rgba(2, 2, 5, 0.85);
         }
 
-        .nav-title { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
+        .nav-title { font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; }
         .nav-title span { color: var(--accent); }
 
         .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
 
-        /* Tabs UI */
+        /* Search & Tabs Wrapper */
+        .controls { display: flex; flex-direction: column; align-items: center; margin-bottom: 50px; gap: 20px; }
+
+        .search-box {
+            width: 100%; max-width: 600px;
+            background: #16171d; border: 1px solid var(--border);
+            padding: 16px 24px; border-radius: 16px;
+            color: white; font-size: 1rem; outline: none;
+        }
+        .search-box:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(62, 129, 255, 0.15); }
+
         .tabs-container {
-            display: flex;
-            justify-content: center;
-            background: var(--glass);
-            padding: 6px;
-            border-radius: 14px;
-            width: fit-content;
-            margin: 0 auto 50px auto;
-            border: 1px solid var(--border);
+            display: flex; background: #16171d; padding: 5px; border-radius: 14px; border: 1px solid var(--border);
         }
 
         .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 12px 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 10px 25px; border-radius: 10px; cursor: pointer; font-weight: 600;
         }
 
-        .tab-btn.active {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 4px 15px rgba(62, 129, 255, 0.3);
-        }
+        .tab-btn.active { background: var(--accent); color: white; }
 
-        /* Search Bar */
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 40px auto;
-            display: block;
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 15px 25px;
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-        }
-
-        /* Grid & Cards */
+        /* Content Sections */
         .content-section { display: none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .content-section.active { display: grid; }
 
+        /* Card Design */
         .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: var(--card); border: 1px solid var(--border);
+            padding: 24px; border-radius: 20px;
+            display: flex; flex-direction: column; position: relative;
         }
-
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card:hover { border-color: var(--accent); transform: translateY(-6px); background: #12131a; }
         
-        .tag { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-        .card h3 { margin: 0 0 10px 0; font-size: 1.25rem; }
-        .card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; background: var(--success); }
+        .status-text { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--success); display: flex; align-items: center; margin-bottom: 12px; }
+
+        .card h3 { margin: 0 0 8px 0; font-size: 1.2rem; }
+        .card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; flex-grow: 1; margin-bottom: 20px; }
 
         .btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            text-decoration: none;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
+            background: #1e2028; border: 1px solid var(--border);
+            color: white; padding: 12px; border-radius: 12px;
+            text-decoration: none; text-align: center; font-size: 0.85rem; font-weight: 700;
         }
+        .btn:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.02); }
 
-        .btn:hover { background: var(--accent); border-color: var(--accent); }
+        .featured { border: 1px solid var(--accent); box-shadow: 0 10px 30px rgba(62, 129, 255, 0.1); }
+        .featured-label { position: absolute; top: -10px; right: 20px; background: var(--accent); font-size: 0.65rem; padding: 2px 10px; border-radius: 5px; font-weight: 800; }
 
-        .featured { border: 1px solid rgba(62, 129, 255, 0.4); background: linear-gradient(145deg, #0b0d13 0%, #111827 100%); }
-
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-title">Bad Design <span>Searcher</span></div>
+        <div id="api-status" style="font-size: 0.7rem; color: var(--text-muted);">Status API: <span style="color: var(--success)">Active</span></div>
     </nav>
 
     <div class="container">
-        <input type="text" class="search-box" id="searchInput" placeholder="Search for an executor or SS..." onkeyup="filterCards()">
-
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="openTab(event, 'ss')">ServerSides</button>
-            <button class="tab-btn" onclick="openTab(event, 'exec')">Regular Executors</button>
+        <div class="controls">
+            <input type="text" class="search-box" id="searchInput" placeholder="Search serversides, executors, or features..." onkeyup="filterCards()">
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="openTab(event, 'ss')">ServerSides</button>
+                <button class="tab-btn" onclick="openTab(event, 'exec')">Executors</button>
+            </div>
         </div>
 
         <div id="ss" class="content-section active">
             <div class="card featured">
-                <div>
-                    <div class="tag">Exclusive</div>
-                    <h3>Bad Design SS</h3>
-                    <p>The flagship backdoor with lightning-fast execution and 500+ daily games.</p>
-                </div>
+                <span class="featured-label">OWNER</span>
+                <div class="status-text"><span class="status-dot"></span>Online</div>
+                <h3>Bad Design SS</h3>
+                <p>The ultimate backdoor solution. High-speed execution, 500+ games daily, and custom script hub.</p>
                 <div style="display: flex; gap: 8px;">
-                    <a href="https://discord.gg/yourlink" class="btn" style="flex:1">Paid</a>
-                    <a href="https://discord.gg/yourlink" class="btn" style="flex:1">Free</a>
+                    <a href="https://example.com/paid" class="btn" style="flex:1">Paid</a>
+                    <a href="https://example.com/free" class="btn" style="flex:1">Free</a>
                 </div>
             </div>
-
-            <div class="card"><div><div class="tag">Online</div><h3>Exoliner</h3><p>Legacy SS provider with high uptime.</p></div><a href="#" class="btn">Join Discord</a></div>
-            <div class="card"><div><div class="tag">Online</div><h3>Aureus</h3><p>Sleek UI and powerful administrative commands.</p></div><a href="#" class="btn">Join Discord</a></div>
-            <div class="card"><div><div class="tag">Online</div><h3>Serverside.fun</h3><p>Classic community choice for backdoors.</p></div><a href="#" class="btn">Join Discord</a></div>
-            <div class="card"><div><div class="tag">Online</div><h3>Metability</h3><p>Focused on high-player count games.</p></div><a href="#" class="btn">Join Discord</a></div>
-            <div class="card"><div><div class="tag">Online</div><h3>Nebula SS</h3><p>Fast-growing executor with active staff.</p></div><a href="#" class="btn">Join Discord</a></div>
-            <div class="card"><div><div class="tag">Maintenance</div><h3>Liner SS</h3><p>Currently undergoing server migration.</p></div><a href="#" class="btn">Check Status</a></div>
-            </div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Exoliner</h3><p>Reliable legacy serverside.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Aureus</h3><p>Fast, stealthy backdoor.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Serverside.fun</h3><p>Community classic.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Metability</h3><p>High player-count games.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Nebula</h3><p>Modern admin panel.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Stigma</h3><p>Advanced script support.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Vortex</h3><p>Massive backdoor database.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Project SS</h3><p>Experimental execution.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Drip SS</h3><p>Visual UI focused.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot" style="background:#ef4444"></span>Offline</div><h3>Kronos</h3><p>Maintenance mode.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Eclipse</h3><p>Stealth focused.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Frost SS</h3><p>Cold, clean, fast.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Titan</h3><p>Powerful command set.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Aero</h3><p>Lightweight execution.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Inferno</h3><p>High speed pings.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Zenith</h3><p>Multi-game support.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Raptor</h3><p>Aggressive backdooring.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Pulse</h3><p>Active updates.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Liquid SS</h3><p>Fluid user experience.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+        </div>
 
         <div id="exec" class="content-section">
-            <div class="card"><div><div class="tag">v2.0</div><h3>Synapse Z</h3><p>Top-tier stability for modern Roblox.</p></div><a href="https://synapsez.net" class="btn">Website</a></div>
-            <div class="card"><div><div class="tag">Updated</div><h3>Wave</h3><p>High-level execution with a custom UI.</p></div><a href="#" class="btn">Website</a></div>
-            <div class="card"><div><div class="tag">Free</div><h3>Solara</h3><p>Reliable free executor for hobbyists.</p></div><a href="#" class="btn">Download</a></div>
-            <div class="card"><div><div class="tag">Beta</div><h3>Swift</h3><p>A new contender in the execution space.</p></div><a href="#" class="btn">Discord</a></div>
-            <div class="card"><div><div class="tag">Online</div><h3>Celery</h3><p>Simple, effective, and lightweight.</p></div><a href="#" class="btn">Download</a></div>
-            <div class="card"><div><div class="tag">Paid</div><h3>Sentinel</h3><p>Focused on security and longevity.</p></div><a href="#" class="btn">Buy Now</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Synapse Z</h3><p>Level 8 execution.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Wave</h3><p>Sleek modern executor.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Solara</h3><p>V3 execution engine.</p><a href="https://www.example.com" class="btn">Download</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Swift</h3><p>Fastest load times.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Celery</h3><p>Lightweight & free.</p><a href="https://www.example.com" class="btn">Download</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Codex</h3><p>Mobile & PC support.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Delta</h3><p>Cross-platform power.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Hydrogen</h3><p>Clean UI, high speed.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot" style="background:#ef4444"></span>Offline</div><h3>Vega X</h3><p>Awaiting update.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Arceus X</h3><p>Android favorite.</p><a href="https://www.example.com" class="btn">Download</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Fluxus</h3><p>Reliable and free.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Oxygen U</h3><p>User-friendly interface.</p><a href="https://www.example.com" class="btn">Download</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Krnl</h3><p>The legacy king.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>JJSploit</h3><p>For the memes.</p><a href="https://www.example.com" class="btn">Download</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Electron</h3><p>Consistent updates.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Valyse</h3><p>Feature rich.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>SirHurt</h3><p>Old school power.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Sentinel</h3><p>Security first.</p><a href="https://www.example.com" class="btn">Website</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Temple</h3><p>Elite community.</p><a href="https://www.example.com" class="btn">Discord</a></div>
+            <div class="card"><div class="status-text"><span class="status-dot"></span>Online</div><h3>Nihon</h3><p>Sleek and Japanese-styled.</p><a href="https://www.example.com" class="btn">Website</a></div>
         </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Bad Design Searcher | Not affiliated with Roblox Corp.
     </div>
 
     <script>
@@ -181,7 +185,8 @@
             let cards = document.getElementsByClassName('card');
             for (let i = 0; i < cards.length; i++) {
                 let title = cards[i].querySelector('h3').innerText.toLowerCase();
-                cards[i].style.display = title.includes(input) ? "flex" : "none";
+                let desc = cards[i].querySelector('p').innerText.toLowerCase();
+                cards[i].style.display = (title.includes(input) || desc.includes(input)) ? "flex" : "none";
             }
         }
     </script>
