@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox SS Directory</title>
+    <style>
+        :root {
+            --primary: #00ff88;
+            --bg: #0b0b0f;
+            --card-bg: #16161e;
+            --text: #ffffff;
+            --secondary: #7289da; /* Discord Blurple */
+        }
+
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
+        .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
+        
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { font-size: 2.5rem; color: var(--primary); text-shadow: 0 0 15px rgba(0, 255, 136, 0.3); }
+        p.subtitle { color: #888; }
+
+        /* Grid System */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+
+        /* Card Styling */
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid #222; 
+            padding: 25px; 
+            border-radius: 12px; 
+            transition: 0.3s ease;
+            position: relative;
+        }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+        /* Featured Badge for Your SS */
+        .featured { border: 2px solid var(--primary); box-shadow: 0 0 20px rgba(0, 255, 136, 0.1); }
+        .badge { background: var(--primary); color: black; padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; position: absolute; top: 15px; right: 15px; }
+
+        .status { font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
+        .online { color: var(--primary); }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.2s; }
+        .btn-main { background: var(--primary); color: black; }
+        .btn-outline { border: 1px solid #444; color: white; }
+        .btn-main:hover { opacity: 0.8; }
+        .btn-outline:hover { background: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Roblox ServerSide Directory</h1>
+        <p class="subtitle">The ultimate list of working backdoors and executors.</p>
+    </header>
+
+    <div class="grid">
+        <div class="card featured">
+            <span class="badge">FEATURED</span>
+            <div class="status online">● WORKING</div>
+            <h3>Bad Design SS</h3>
+            <p>High-quality execution with a massive game list. Features a clean UI and reliable stability.</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-main">Get Paid</a>
+                <a href="#" class="btn btn-outline">Free Version</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="status online">● WORKING</div>
+            <h3>Exoliner</h3>
+            <p>One of the longest-running SS executors with a large community and active support.</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-outline" style="width: 100%;">Join Discord</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="status online">● WORKING</div>
+            <h3>Serverside.fun</h3>
+            <p>Known for its built-in script hub and ease of use for new users.</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-outline" style="width: 100%;">Visit Site</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
